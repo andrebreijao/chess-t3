@@ -122,15 +122,19 @@ export default function ChessBoard() {
 
   const handleSignIn = async (newName: string | undefined) => {
     if (!input) return;
-    const response = await axios.post("/api/connect", { name: newName });
-    const { color: newColor } = response.data;
-    setColor(newColor);
-
-    if (newColor === "full") {
-      setName(null);
-    } else {
-      setName(input);
+    // const response = await axios.post("/api/connect", { name: newName });
+    // const { color: newColor } = response.data;
+    if (input === "white" || input === "black") {
+      setColor(input);
+      setName(input)
     }
+    return
+
+    // if (newColor === "full") {
+    //   setName(null);
+    // } else {
+    //   setName(input);
+    // }
   };
 
   const handleRestartGame = () => {
