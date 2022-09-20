@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Chess, Piece } from "chess.js";
 import { Chessboard, Square } from "react-chessboard";
 import axios from "axios";
+import { useWindowSize } from "react-use";
+
 
 export default function ChessBoard() {
   const initialFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -11,6 +13,8 @@ export default function ChessBoard() {
   const [game, setGame] = useState<string>(initialFen);
   const [color, setColor] = useState<"white" | "black" | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { width } = useWindowSize();
+
 
   const sendFenToServer = async (fen: string) => {
     const response = await axios.post("/api/boardState", { state: fen });
@@ -65,12 +69,10 @@ export default function ChessBoard() {
   useEffect(() => {
     const refreshFenFromServer = async () => {
       const serverFen = await axios.get("/api/boardState");
-      console.log("serverFen", serverFen);
       setGame(serverFen.data);
     };
 
     const poolling = async () => {
-      console.log("poolling");
       const interval = await new Promise((resolve) => {
         setTimeout(() => {
           resolve(true);
@@ -138,7 +140,6 @@ export default function ChessBoard() {
   };
 
   const handleRestartGame = () => {
-    console.log("restart game");
     axios.post("/api/newGame");
     setGame(initialFen);
     setShowModal(false);
@@ -258,13 +259,14 @@ export default function ChessBoard() {
           <div className="text-white text-2xl m-6">Chess do Breijao</div>
           <Chessboard
             position={game}
+            arePremovesAllowed
+            boardWidth={width < 540 ? width : 540}
             onPieceDrop={onDrop as any}
             boardOrientation={color ? color : "white"}
           />
           <button
             className="bg-gray-800 text-white p-2 rounded-md m-6"
             onClick={() => {
-              console.log("clicked");
               setShowModal(true);
             }}
           >
