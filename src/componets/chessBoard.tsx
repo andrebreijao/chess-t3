@@ -53,8 +53,8 @@ export default function ChessBoard() {
     if (move === null) return false;
 
     try {
-      await sendFenToServer(currentGame.fen());
       setGame(currentGame.fen());
+      await sendFenToServer(currentGame.fen());
       return true;
     } catch (error) {
       console.error(error);
