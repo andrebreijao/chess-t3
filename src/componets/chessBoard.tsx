@@ -259,7 +259,6 @@ export default function ChessBoard() {
           <div className="text-white text-2xl m-6">Chess do Breijao</div>
           <Chessboard
             position={game}
-            arePremovesAllowed
             boardWidth={width < 540 ? width : 540}
             onPieceDrop={onDrop as any}
             boardOrientation={color ? color : "white"}
