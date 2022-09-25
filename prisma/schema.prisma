@@ -15,3 +15,8 @@ model Games {
     gameName String
     fen      String
 }
+
+model Text {
+    id    String @id @default(cuid())
+    text  String
+}
