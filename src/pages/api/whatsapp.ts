@@ -13,7 +13,7 @@ const whatsapp = async (req: NextApiRequest, res: NextApiResponse) => {
         },
       });
     }
-    return res.status(200).send("Message sent!");
+    return res.status(200).send(message);
   }
 };
 
